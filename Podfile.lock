@@ -1,0 +1,32 @@
+PODS:
+  - Eureka (4.0.1)
+  - ImageRow (3.0.0):
+    - Eureka (~> 4.0)
+
+DEPENDENCIES:
+  - Eureka (from `https://github.com/xmartlabs/Eureka.git`, branch `master`)
+  - ImageRow (from `https://github.com/EurekaCommunity/ImageRow.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  Eureka:
+    :branch: master
+    :git: https://github.com/xmartlabs/Eureka.git
+  ImageRow:
+    :branch: master
+    :git: https://github.com/EurekaCommunity/ImageRow.git
+
+CHECKOUT OPTIONS:
+  Eureka:
+    :commit: 076eaaa27d1c90c68f01a6389cfcaa0359ea1a10
+    :git: https://github.com/xmartlabs/Eureka.git
+  ImageRow:
+    :commit: a673639b85e83e5a6bd2841dc9cad948b62ed0d0
+    :git: https://github.com/EurekaCommunity/ImageRow.git
+
+SPEC CHECKSUMS:
+  Eureka: 3311299432b1e11fa4b40796654fc759caabcd93
+  ImageRow: 2683a3b621210ea05c1f3a2fa294d8d14342d24c
+
+PODFILE CHECKSUM: 2b309271a5866d09ecb75f468fe2cb0af41fe4b1
+
+COCOAPODS: 1.3.1
