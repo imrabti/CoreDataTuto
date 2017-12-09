@@ -52,8 +52,13 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = tableView == self.tableView ? contacts[indexPath.row].name : filteredContacts[indexPath.row].name
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ContactTableViewCell else {
+            fatalError("The dequeued cell is not an instance of ContactTableViewCell.")
+        }
+        
+        cell.fullName.text = tableView == self.tableView ? contacts[indexPath.row].name : filteredContacts[indexPath.row].name
+        cell.email.text = tableView == self.tableView ? contacts[indexPath.row].email : filteredContacts[indexPath.row].email
+        cell.phoneNumber.text = tableView == self.tableView ? contacts[indexPath.row].phoneNumber : filteredContacts[indexPath.row].phoneNumber
         
         return cell
     }

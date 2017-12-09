@@ -12,6 +12,7 @@
 		F90854701FD6678700C7D349 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F908546F1FD6678700C7D349 /* EditContactViewController.swift */; };
 		F90854771FD71F5B00C7D349 /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90854761FD71F5B00C7D349 /* ContactType.swift */; };
 		F90854791FD74AE100C7D349 /* ContactForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90854781FD74AE100C7D349 /* ContactForm.swift */; };
+		F95102A51FDBCD0200BBB127 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95102A41FDBCD0200BBB127 /* ContactTableViewCell.swift */; };
 		F9D72AD71FD40ADC00677D47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D72AD61FD40ADC00677D47 /* AppDelegate.swift */; };
 		F9D72ADC1FD40ADC00677D47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9D72ADA1FD40ADC00677D47 /* Main.storyboard */; };
 		F9D72ADF1FD40ADC00677D47 /* CoreDataTuto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F9D72ADD1FD40ADC00677D47 /* CoreDataTuto.xcdatamodeld */; };
@@ -46,6 +47,7 @@
 		F908546F1FD6678700C7D349 /* EditContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		F90854761FD71F5B00C7D349 /* ContactType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
 		F90854781FD74AE100C7D349 /* ContactForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactForm.swift; sourceTree = "<group>"; };
+		F95102A41FDBCD0200BBB127 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		F9D72AD31FD40ADC00677D47 /* CoreDataTuto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataTuto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D72AD61FD40ADC00677D47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9D72ADB1FD40ADC00677D47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				F9D72ADD1FD40ADC00677D47 /* CoreDataTuto.xcdatamodeld */,
 				F908546D1FD4559C00C7D349 /* ContactsTableViewController.swift */,
 				F908546F1FD6678700C7D349 /* EditContactViewController.swift */,
+				F95102A41FDBCD0200BBB127 /* ContactTableViewCell.swift */,
 			);
 			path = CoreDataTuto;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				F90854701FD6678700C7D349 /* EditContactViewController.swift in Sources */,
 				F908546E1FD4559C00C7D349 /* ContactsTableViewController.swift in Sources */,
 				F9D72ADF1FD40ADC00677D47 /* CoreDataTuto.xcdatamodeld in Sources */,
+				F95102A51FDBCD0200BBB127 /* ContactTableViewCell.swift in Sources */,
 				F90854771FD71F5B00C7D349 /* ContactType.swift in Sources */,
 				F9D72AD71FD40ADC00677D47 /* AppDelegate.swift in Sources */,
 			);
