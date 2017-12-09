@@ -10,30 +10,22 @@ import UIKit
 import CoreData
 import Eureka
 import os.log
+import SwiftRecord
 
-class EditNameViewController: FormViewController {
+class EditContactViewController: FormViewController {
     @IBOutlet weak var save: UIBarButtonItem!
     
-    var managedContext: NSManagedObjectContext?
-    var entity: NSEntityDescription?
-    var addOrEditPerson: Person?
+    var addOrEditContact: Contact?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        managedContext = appDelegate.persistentContainer.viewContext
-        entity = NSEntityDescription.entity(forEntityName: "Person", in: managedContext!)
-        
-        if addOrEditPerson != nil {
+        if addOrEditContact != nil {
             title = "Edit Contact"
         } else {
             title = "New Contact"
-            addOrEditPerson = NSManagedObject(entity: entity!, insertInto: managedContext) as? Person
-            addOrEditPerson?.type = ContactType.Friend.rawValue
+            addOrEditContact = Contact.create() as? Contact
+            addOrEditContact?.type = ContactType.Friend.rawValue
         }
         
         setupForm()
@@ -59,10 +51,8 @@ class EditNameViewController: FormViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Save or update the contact
-        do {
-            try self.managedContext?.save()
-        } catch _ as NSError {
-            os_log("Couldn't save the entity.", log: OSLog.default, type: .debug)
+        if let contact = addOrEditContact {
+            contact.save()
         }
     }
     
@@ -81,11 +71,11 @@ class EditNameViewController: FormViewController {
                 row.title = "Full Name"
                 row.add(rule: RuleRequired())
                 
-                if let name = addOrEditPerson?.name {
+                if let name = addOrEditContact?.name {
                     row.value = name
                 }
             }.onChange() { row in
-                self.addOrEditPerson?.name = row.value
+                self.addOrEditContact?.name = row.value
             }.cellUpdate { cell, row in
                 if !row.isValid {
                     cell.titleLabel?.textColor = .red
@@ -95,19 +85,19 @@ class EditNameViewController: FormViewController {
             <<< PickerInputRow<String>(ContactForm.ContactType.rawValue) { row in
                 row.title = "Contact Type"
                 row.options = ContactType.allValues.map {value in value.rawValue}
-                row.value = addOrEditPerson?.type
+                row.value = addOrEditContact?.type
             }.onChange() { row in
-                self.addOrEditPerson?.type = row.value
+                self.addOrEditContact?.type = row.value
             }
         
             <<< PhoneRow(ContactForm.PhoneNumber.rawValue) { row in
                 row.title = "Phone Number"
                 
-                if let phoneNumber = addOrEditPerson?.phoneNumber {
+                if let phoneNumber = addOrEditContact?.phoneNumber {
                     row.value = phoneNumber
                 }
             }.onChange() { row in
-                self.addOrEditPerson?.phoneNumber = row.value
+                self.addOrEditContact?.phoneNumber = row.value
             }.cellUpdate { cell, row in
                 if !row.isValid {
                     cell.titleLabel?.textColor = .red
@@ -118,11 +108,11 @@ class EditNameViewController: FormViewController {
                 row.title = "Email"
                 row.add(rule: RuleEmail())
                 
-                if let email = addOrEditPerson?.email {
+                if let email = addOrEditContact?.email {
                     row.value = email
                 }
             }.onChange() { row in
-                self.addOrEditPerson?.email = row.value
+                self.addOrEditContact?.email = row.value
             }.cellUpdate { cell, row in
                 if !row.isValid {
                     cell.titleLabel?.textColor = .red

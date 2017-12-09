@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F5A81905BA8D36D25E065C85 /* Pods_CoreDataTuto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A8C67696FF2F12F80374A5 /* Pods_CoreDataTuto.framework */; };
-		F908546E1FD4559C00C7D349 /* NamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F908546D1FD4559C00C7D349 /* NamesTableViewController.swift */; };
-		F90854701FD6678700C7D349 /* EditNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F908546F1FD6678700C7D349 /* EditNameViewController.swift */; };
+		F908546E1FD4559C00C7D349 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F908546D1FD4559C00C7D349 /* ContactsTableViewController.swift */; };
+		F90854701FD6678700C7D349 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F908546F1FD6678700C7D349 /* EditContactViewController.swift */; };
 		F90854771FD71F5B00C7D349 /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90854761FD71F5B00C7D349 /* ContactType.swift */; };
 		F90854791FD74AE100C7D349 /* ContactForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90854781FD74AE100C7D349 /* ContactForm.swift */; };
 		F9D72AD71FD40ADC00677D47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D72AD61FD40ADC00677D47 /* AppDelegate.swift */; };
@@ -42,8 +42,8 @@
 		809EAE35682EAEB4AADD8AEF /* Pods-CoreDataTuto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataTuto.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataTuto/Pods-CoreDataTuto.release.xcconfig"; sourceTree = "<group>"; };
 		967E43DAC6890E022D173982 /* Pods-CoreDataTuto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreDataTuto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoreDataTuto/Pods-CoreDataTuto.debug.xcconfig"; sourceTree = "<group>"; };
 		B8A8C67696FF2F12F80374A5 /* Pods_CoreDataTuto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoreDataTuto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F908546D1FD4559C00C7D349 /* NamesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamesTableViewController.swift; sourceTree = "<group>"; };
-		F908546F1FD6678700C7D349 /* EditNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewController.swift; sourceTree = "<group>"; };
+		F908546D1FD4559C00C7D349 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
+		F908546F1FD6678700C7D349 /* EditContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		F90854761FD71F5B00C7D349 /* ContactType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
 		F90854781FD74AE100C7D349 /* ContactForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactForm.swift; sourceTree = "<group>"; };
 		F9D72AD31FD40ADC00677D47 /* CoreDataTuto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataTuto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,8 +137,8 @@
 				F9D72AE21FD40ADC00677D47 /* LaunchScreen.storyboard */,
 				F9D72AE51FD40ADC00677D47 /* Info.plist */,
 				F9D72ADD1FD40ADC00677D47 /* CoreDataTuto.xcdatamodeld */,
-				F908546D1FD4559C00C7D349 /* NamesTableViewController.swift */,
-				F908546F1FD6678700C7D349 /* EditNameViewController.swift */,
+				F908546D1FD4559C00C7D349 /* ContactsTableViewController.swift */,
+				F908546F1FD6678700C7D349 /* EditContactViewController.swift */,
 			);
 			path = CoreDataTuto;
 			sourceTree = "<group>";
@@ -311,11 +311,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-CoreDataTuto/Pods-CoreDataTuto-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageRow/ImageRow.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftRecord/SwiftRecord.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageRow.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRecord.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -363,8 +365,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F90854791FD74AE100C7D349 /* ContactForm.swift in Sources */,
-				F90854701FD6678700C7D349 /* EditNameViewController.swift in Sources */,
-				F908546E1FD4559C00C7D349 /* NamesTableViewController.swift in Sources */,
+				F90854701FD6678700C7D349 /* EditContactViewController.swift in Sources */,
+				F908546E1FD4559C00C7D349 /* ContactsTableViewController.swift in Sources */,
 				F9D72ADF1FD40ADC00677D47 /* CoreDataTuto.xcdatamodeld in Sources */,
 				F90854771FD71F5B00C7D349 /* ContactType.swift in Sources */,
 				F9D72AD71FD40ADC00677D47 /* AppDelegate.swift in Sources */,
