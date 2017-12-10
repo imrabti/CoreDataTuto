@@ -96,16 +96,22 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .normal, title: "Delete") { action, index in
+            // Remove contact from the model
             self.contacts[indexPath.section][indexPath.row].delete()
             self.contacts[indexPath.section].remove(at: index.row)
+
+            // Remove the contact from the TableView
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             
             if self.contacts[indexPath.section].isEmpty {
                 self.contacts.remove(at: indexPath.section)
                 self.contactSections.remove(at: indexPath.section)
+                
+                // Remove the section from the TableView
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
             }
             
             Contact.save()
-            tableView.reloadData()
         }
         delete.backgroundColor = UIColor.red
         
@@ -137,21 +143,30 @@ class ContactsTableViewController: UITableViewController {
             if let selectedIndexPath = selectedRowToEdit {
                 if (contactSections[selectedIndexPath.section] != contact.type) {
                     if let section = contactSections.index(where: { $0 == contact.type }) {
-                        // TODO : Move from one section to the another
+                        contacts[selectedIndexPath.section].remove(at: selectedIndexPath.row)
+                        contacts[section].append(contact)
+                        
+                        // Update TableView
+                        tableView.moveRow(at: selectedIndexPath, to: IndexPath(row: contacts[section].count - 1, section: section))
                     } else {
                         contacts[selectedIndexPath.section].remove(at: selectedIndexPath.row)
                         contactSections.append(contact.type!)
                         contacts.append([contact])
                         
-                        if contacts[selectedIndexPath.section].isEmpty {
-                            contacts.remove(at: selectedIndexPath.section)
-                            contactSections.remove(at: selectedIndexPath.section)
-                        }
+                        // Update the TableView
+                        tableView.reloadData()
                     }
                 }
                 
+                if contacts[selectedIndexPath.section].isEmpty {
+                    contacts.remove(at: selectedIndexPath.section)
+                    contactSections.remove(at: selectedIndexPath.section)
+                    
+                    // Update TableView
+                    tableView.deleteSections(IndexSet(integer: selectedIndexPath.section), with: .automatic)
+                }
+                
                 selectedRowToEdit = nil
-                tableView.reloadData()
             } else {
                 if let section = contactSections.index(where: { $0 == contact.type }) {
                     contacts[section].append(contact)
@@ -162,7 +177,7 @@ class ContactsTableViewController: UITableViewController {
                     contactSections.append(contact.type!)
                     contacts.append([contact])
                     
-                    // Update the table view
+                    // Update the TableView
                     tableView.insertSections(IndexSet(integer: newSectionIndex), with: .automatic)
                 }
             }
