@@ -40,16 +40,18 @@ class ContactsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Load all contacts
-        let allContacts = Contact.all() as! [Contact]
-        
-        // Group contacts by section
-        for contactType in ContactType.allValues {
-            let dataForSection = allContacts.filter({ $0.type == contactType.rawValue })
+        if (contacts.isEmpty) {            
+            // load all contacts from database
+            let allContacts = Contact.all() as! [Contact]
             
-            if dataForSection.count > 0 {
-                contacts.append(dataForSection)
-                contactSections.append(contactType.rawValue)
+            // Group contacts by section
+            for contactType in ContactType.allValues {
+                let dataForSection = allContacts.filter({ $0.type == contactType.rawValue })
+                
+                if dataForSection.count > 0 {
+                    contacts.append(dataForSection)
+                    contactSections.append(contactType.rawValue)
+                }
             }
         }
     }
@@ -97,6 +99,12 @@ class ContactsTableViewController: UITableViewController {
             self.contacts[indexPath.section][indexPath.row].delete()
             self.contacts[indexPath.section].remove(at: index.row)
             
+            if self.contacts[indexPath.section].isEmpty {
+                self.contacts.remove(at: indexPath.section)
+                self.contactSections.remove(at: indexPath.section)
+            }
+            
+            Contact.save()
             tableView.reloadData()
         }
         delete.backgroundColor = UIColor.red
@@ -127,24 +135,35 @@ class ContactsTableViewController: UITableViewController {
     @IBAction func unwindToContactContactList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? EditContactViewController, let contact = sourceViewController.addOrEditContact {
             if let selectedIndexPath = selectedRowToEdit {
-                // Updated model with new contact
-                contacts[selectedIndexPath.section][selectedIndexPath.row] = contact
+                if (contactSections[selectedIndexPath.section] != contact.type) {
+                    if let section = contactSections.index(where: { $0 == contact.type }) {
+                        // TODO : Move from one section to the another
+                    } else {
+                        contacts[selectedIndexPath.section].remove(at: selectedIndexPath.row)
+                        contactSections.append(contact.type!)
+                        contacts.append([contact])
+                        
+                        if contacts[selectedIndexPath.section].isEmpty {
+                            contacts.remove(at: selectedIndexPath.section)
+                            contactSections.remove(at: selectedIndexPath.section)
+                        }
+                    }
+                }
+                
                 selectedRowToEdit = nil
-                
-                // TODO : Change from section to section when the ContactType is modified ...
-                
                 tableView.reloadData()
             } else {
                 if let section = contactSections.index(where: { $0 == contact.type }) {
-                    let newIndexPath = IndexPath(row: contacts[section].count, section: section)
-                    
                     contacts[section].append(contact)
-                    tableView.insertRows(at: [newIndexPath], with: .automatic)
+                    tableView.insertRows(at: [IndexPath(row: contacts[section].count - 1, section: section)], with: .automatic)
                 } else {
-                    let newIndexSet = IndexSet()
-                    
+                    // Add new Section and insert the row
+                    let newSectionIndex = contactSections.count
                     contactSections.append(contact.type!)
-                    tableView.insertSections(newIndexSet, with: .automatic)
+                    contacts.append([contact])
+                    
+                    // Update the table view
+                    tableView.insertSections(IndexSet(integer: newSectionIndex), with: .automatic)
                 }
             }
         }

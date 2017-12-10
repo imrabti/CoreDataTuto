@@ -7,7 +7,7 @@
 //
 
 enum ContactType : String {
-    static let allValues = [Work, Friend, Family]
+    static let allValues = [Friend, Work, Family]
     
     case Work
     case Friend
