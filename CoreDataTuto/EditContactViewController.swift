@@ -11,6 +11,7 @@ import CoreData
 import Eureka
 import os.log
 import SwiftRecord
+import ImageRow
 
 class EditContactViewController: FormViewController {
     @IBOutlet weak var save: UIBarButtonItem!
@@ -67,6 +68,23 @@ class EditContactViewController: FormViewController {
     func setupForm() {
         form
             +++ Section()
+            <<< ImageRow() { row in
+                row.title = "Contact picture"
+                row.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum, .Camera]
+                row.clearAction = .yes(style: UIAlertActionStyle.destructive)
+                
+                if let picture = self.addOrEditContact?.picture {
+                    row.value = UIImage(data: picture)
+                }
+            }.cellUpdate { cell, row in
+                cell.accessoryView?.layer.cornerRadius = 17
+                cell.accessoryView?.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
+            }.onChange() { row in
+                if let picture = row.value {
+                    self.addOrEditContact?.picture = UIImagePNGRepresentation(picture)
+                }
+            }
+            
             <<< TextRow(ContactForm.Name.rawValue) { row in
                 row.title = "Full Name"
                 row.add(rule: RuleRequired())
