@@ -18,23 +18,18 @@ class ContactsTableViewController: UITableViewController {
     var selectedRowToEdit: IndexPath?
     
     var searchController: UISearchController!
-    var resultsController = UITableViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.resultsController.tableView.dataSource = self
-        self.resultsController.tableView.delegate = self
-        self.resultsController.tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "Cell")
-        
-        self.searchController = UISearchController(searchResultsController: self)
+        self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.scopeButtonTitles = ContactType.allValues.map({t in t.rawValue})
         self.searchController.searchBar.placeholder = "Search Contacts"
         self.searchController.searchBar.tintColor = UIColor.white
-        
         self.navigationItem.searchController = searchController
+        
         definesPresentationContext = true
     }
     
@@ -60,26 +55,26 @@ class ContactsTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == self.tableView {
-            return contactSections.count
-        } else {
+        if searchController.isActive {
             return 1
+        } else {
+            return contactSections.count
         }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.tableView {
-            return contacts[section].count
-        } else {
+        if searchController.isActive {
             return self.filteredContacts.count
+        } else {
+            return contacts[section].count
         }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (tableView == self.tableView) {
-            return contactSections[section]
+        if searchController.isActive {
+            return nil
         } else {
-            return ""
+            return contactSections[section]
         }
     }
     
@@ -88,18 +83,15 @@ class ContactsTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of ContactTableViewCell.")
         }
         
-        cell.fullName.text = tableView == self.tableView ? contacts[indexPath.section][indexPath.row].name : filteredContacts[indexPath.row].name
-        cell.email.text = tableView == self.tableView ? contacts[indexPath.section][indexPath.row].email : filteredContacts[indexPath.row].email
-        cell.phoneNumber.text = tableView == self.tableView ? contacts[indexPath.section][indexPath.row].phoneNumber : filteredContacts[indexPath.row].phoneNumber
+        // Choose between contact or filteredContacts depending if the user is searching
+        let dataModel: [Contact] = searchController.isActive ? filteredContacts : contacts[indexPath.section]
         
-        if tableView == self.tableView {
-            if let picture = contacts[indexPath.section][indexPath.row].picture {
-                cell.contactAvatar(UIImage(data: picture)!)
-            }
-        } else {
-            if let picture = filteredContacts[indexPath.row].picture {
-                cell.contactAvatar(UIImage(data: picture)!)
-            }
+        cell.fullName.text = dataModel[indexPath.row].name
+        cell.email.text = dataModel[indexPath.row].email
+        cell.phoneNumber.text = dataModel[indexPath.row].phoneNumber
+        
+        if let picture = dataModel[indexPath.row].picture {
+            cell.contactAvatar(UIImage(data: picture)!)
         }
         
         return cell
@@ -213,6 +205,6 @@ extension ContactsTableViewController: UISearchResultsUpdating {
             return false
         }
         
-        self.resultsController.tableView.reloadData()
+        tableView.reloadData()
     }
 }
