@@ -53,7 +53,7 @@ class EditContactViewController: FormViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Save or update the contact
         if let contact = addOrEditContact {
-            contact.save()
+            let _ = contact.save()
         }
     }
     

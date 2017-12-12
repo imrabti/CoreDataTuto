@@ -7,21 +7,20 @@
 //
 
 import UIKit
+import Toucan
 
 class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var fullName: UILabel!
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var phoneNumber: UILabel!
+    @IBOutlet weak var picture: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    public func contactAvatar(_ picture: UIImage) {
+        let resizedImage = Toucan(image: picture).resize(CGSize(width: 68, height: 68), fitMode: Toucan.Resize.FitMode.crop).image
+        self.picture.image = Toucan(image: resizedImage!).maskWithEllipse().image
     }
-
 }

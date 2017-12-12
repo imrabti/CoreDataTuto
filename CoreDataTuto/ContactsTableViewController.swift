@@ -32,6 +32,7 @@ class ContactsTableViewController: UITableViewController {
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.scopeButtonTitles = ContactType.allValues.map({t in t.rawValue})
         self.searchController.searchBar.placeholder = "Search Contacts"
+        self.searchController.searchBar.tintColor = UIColor.white
         
         self.navigationItem.searchController = searchController
         definesPresentationContext = true
@@ -90,6 +91,16 @@ class ContactsTableViewController: UITableViewController {
         cell.fullName.text = tableView == self.tableView ? contacts[indexPath.section][indexPath.row].name : filteredContacts[indexPath.row].name
         cell.email.text = tableView == self.tableView ? contacts[indexPath.section][indexPath.row].email : filteredContacts[indexPath.row].email
         cell.phoneNumber.text = tableView == self.tableView ? contacts[indexPath.section][indexPath.row].phoneNumber : filteredContacts[indexPath.row].phoneNumber
+        
+        if tableView == self.tableView {
+            if let picture = contacts[indexPath.section][indexPath.row].picture {
+                cell.contactAvatar(UIImage(data: picture)!)
+            }
+        } else {
+            if let picture = filteredContacts[indexPath.row].picture {
+                cell.contactAvatar(UIImage(data: picture)!)
+            }
+        }
         
         return cell
     }
