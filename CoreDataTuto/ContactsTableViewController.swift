@@ -25,9 +25,9 @@ class ContactsTableViewController: UITableViewController {
         
         self.resultsController.tableView.dataSource = self
         self.resultsController.tableView.delegate = self
-        self.resultsController.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.resultsController.tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        self.searchController = UISearchController(searchResultsController: self.resultsController)
+        self.searchController = UISearchController(searchResultsController: self)
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.scopeButtonTitles = ContactType.allValues.map({t in t.rawValue})
@@ -79,7 +79,7 @@ class ContactsTableViewController: UITableViewController {
         if (tableView == self.tableView) {
             return contactSections[section]
         } else {
-            return nil
+            return ""
         }
     }
     
@@ -122,7 +122,7 @@ class ContactsTableViewController: UITableViewController {
                 tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
             }
             
-            Contact.save()
+            let _ = Contact.save()
         }
         delete.backgroundColor = UIColor.red
         
@@ -205,12 +205,13 @@ extension ContactsTableViewController: UISearchBarDelegate {
 
 extension ContactsTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        /*self.filteredContacts = self.contacts.filter { (contact: Contact) -> Bool in
+        filteredContacts = contacts.joined().filter { (contact: Contact) -> Bool in
             if let name = contact.name {
                 return name.lowercased().contains(self.searchController.searchBar.text!.lowercased())
             }
+            
             return false
-        }*/
+        }
         
         self.resultsController.tableView.reloadData()
     }
