@@ -24,8 +24,9 @@ class ContactsTableViewController: UITableViewController {
         
         self.searchController = UISearchController(searchResultsController: nil)
         self.searchController.searchResultsUpdater = self
+        self.searchController.searchBar.delegate = self
         self.searchController.dimsBackgroundDuringPresentation = false
-        self.searchController.searchBar.scopeButtonTitles = ContactType.allValues.map({t in t.rawValue})
+        self.searchController.searchBar.scopeButtonTitles = ContactType.allValuesSearch.map({t in t.rawValue})
         self.searchController.searchBar.placeholder = "Search Contacts"
         self.searchController.searchBar.tintColor = UIColor.white
         self.navigationItem.searchController = searchController
@@ -186,25 +187,38 @@ class ContactsTableViewController: UITableViewController {
             }
         }
     }
+    
+    // MARK : - Other functions
+    
+    func filterContacts(_ searchText: String, scope: String = "All") {
+        filteredContacts = contacts.joined().filter { (contact: Contact) -> Bool in
+            let doesTypeMatch = (scope == "All") || (contact.type == scope)
+            
+            if searchBarIsEmpty() {
+                return doesTypeMatch
+            } else {
+                return doesTypeMatch && contact.name!.lowercased().contains(searchText.lowercased())
+            }
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
 }
 
 extension ContactsTableViewController: UISearchBarDelegate {
-    // MARK: - UISearchBar Delegate
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        // TODO : Filter when contact type changed ...
+        filterContacts(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
 
 extension ContactsTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filteredContacts = contacts.joined().filter { (contact: Contact) -> Bool in
-            if let name = contact.name {
-                return name.lowercased().contains(self.searchController.searchBar.text!.lowercased())
-            }
-            
-            return false
-        }
-        
-        tableView.reloadData()
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContacts(searchController.searchBar.text!, scope: scope)
     }
 }
