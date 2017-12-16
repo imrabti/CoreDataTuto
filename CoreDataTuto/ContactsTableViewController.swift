@@ -79,6 +79,10 @@ class ContactsTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return !searchController.isActive;
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ContactTableViewCell else {
             fatalError("The dequeued cell is not an instance of ContactTableViewCell.")
